@@ -1,16 +1,12 @@
-# This is a sample Python script.
+import csv
+import re
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+with open('details.csv', 'r', encoding='utf-8') as csvfile:
+    rows = csv.reader(csvfile)
+    for row in rows:
+        asd=re.search(r'(?P<col9>\w*)\s\S(?P<col8>(\s\w*)*)\S\s(?P<col10>\d{4})(,)?\s?(?P<Year2>(\d{4}))?',row[0])
+        if asd:
+            print(asd.group('col9'),asd.group('col8'),asd.group('col10'))
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# (?P<col9>\w*)\s\S(?P<col8>(\s\w*)*)\S\s(?P<col10>\d{4})\,?\s?(?P<Year2>(\d{4}))?((,.)|(\s))(?P<col4pom>((vol.\s)|(S.)))?(?P<col4>\d)?(?P<col3pom>(nr\s)|(t.\s)|(No.\s))?(?P<col3>\d\d+)?(,\s?|\s)?(?P<col7>)
