@@ -1,14 +1,51 @@
 import csv
 import re
+from tkinter.filedialog import askopenfilename
 
-with open('details.csv', 'r', encoding='utf-8') as csvfile:
-    rows = csv.reader(csvfile)
-    for row in rows:
-        asd=re.search(r'(?P<col9>\w*)\s\S(?P<col8>(\s\w*)*)\S\s(?P<col10>\d{4})(,)?\s?',row[0])
-        asd2=re.match(r'(?P<Year2>(\d{4}))?((,.)|(\s))?(?P<col4pom>((vol.\s)|(S.)))?(?P<col4>\d)?(?P<col3pom>(nr\s)|(t.\s)|(No.\s))?(?P<col3>\d\d+)?(,\s?|\s)?\w+\S?\s?(?P<col6>(\d+\-\d+))?',row[1])
-        if asd:
-            print("|Dane z kolumny 9:",asd.group('col9'),"|Dane z kolumny 8:",asd.group('col8'),"|Dane z kolumny 10:",asd.group('col10'))
-        if asd2:
-            print("|Dane z kolumny 4:", asd2.group('col4'),"|Dane z kolumny 3:", asd2.group('col3'),"|Dane z kolumny 6:", asd2.group('col6'))
+def regsearch(fname,regexpression,rownumber):
+    matcharray = []
+    with open(fname, 'r', encoding='utf-8') as csvfile:
+        rows = csv.reader(csvfile)
+        for row in rows:
+            column1=re.search(regexpression,row[rownumber])
+            if column1:
+                x = column1.group('col8')
+                matcharray.append(x)
+    print(matcharray)
+            # if column1:
+            #     print("|Dane z kolumny 9:",column1.group('col9'),"|Dane z kolumny 8:",column1.group('col8'),"|Dane z kolumny 10:",column1.group('col10'))
 
-# (?P<col9>\w*)\s\S(?P<col8>(\s\w*)*)\S\s(?P<col10>\d{4})\,?\s?(?P<Year2>(\d{4}))?((,.)|(\s))(?P<col4pom>((vol.\s)|(S.)))?(?P<col4>\d)?(?P<col3pom>(nr\s)|(t.\s)|(No.\s))?(?P<col3>\d\d+)?(,\s?|\s)?(?P<col7>)
+            # if asd2:
+            #     print("|Dane z kolumny 4:", asd2.group('col4'),"|Dane z kolumny 3:", asd2.group('col3'),"|Dane z kolumny 6:", asd2.group('col6'))
+
+if __name__ == "__main__":
+    filename = askopenfilename()
+    column10 = r'(?P<col10>\d{4})'
+    column9 = r'(?P<col9>\w*)\s\S\s'
+    column8 = r'(\w{1,10}\s\:\s)(?P<col8>(\w+\s)*\w*,)'
+    column6 = r'((s.\s)|S.\s)(?P<col5>\d+\-\d+)'
+    column5 = r'((nr\sart.\s))(?P<col5>\w\d+)'
+    column4 = r'((vol.\s)|(t.\s))(?P<col4>\d+)'
+    column3 = r'((iss.\s)|(nr\s)|(No.)|(num.)|(no.))(?P<col3>\d+)'
+    c10 = regsearch(filename,column10,0)
+    c9 = regsearch(filename,column10,0)
+    c8 = regsearch(filename,column10,0)
+    c6= regsearch(filename,column10,1)
+    c5 = regsearch(filename,column10,1)
+    c4 = regsearch(filename,column10,1)
+    c3 = regsearch(filename,column10,1)
+
+
+
+
+
+
+
+
+
+
+
+
+    # (?P<Year2>(\d{4}))?((,.)|(\s))?(?P<col4pom>((vol.\s)?|(S.)?))?\s?(?P<col4>\d{1,3})?(?P<col3pom>(nr\s)?|(t.\s)?|(No.\s)?)?(?P<col3>\d)?(,?\s?|\s)?\w+?\S?\s?(?P<col6>(\d{1,4}\-\d{1,4}))?(art. )?(?P<col5>\w\d{5})?
+    # (?P<Year2>(\d{4}))?((,.)|(\s))?(?P<col4pom>((vol.\s)?|(S.)?))?\s?(?P<col4>\d)?(?P<col3pom>(nr\s)?|(t.\s)?|(No.\s)?)?(?P<col3>\d\d+)?(,?\s?|\s)?\w+?\S?\s?(?P<col6>(\d{1,4}\-\d{1,4}))?(art. )?(?P<col5>\w\d{5})?
+    # (?P<col9>\w*)\s\S(?P<col8>(\s\w*)*)\S\s(?P<col10>\d{4})(,)?\s?
