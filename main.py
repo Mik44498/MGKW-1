@@ -12,11 +12,7 @@ def regsearch(fname,regexpression,rownumber):
                 x = column1.group('col8')
                 matcharray.append(x)
     print(matcharray)
-            # if column1:
-            #     print("|Dane z kolumny 9:",column1.group('col9'),"|Dane z kolumny 8:",column1.group('col8'),"|Dane z kolumny 10:",column1.group('col10'))
 
-            # if asd2:
-            #     print("|Dane z kolumny 4:", asd2.group('col4'),"|Dane z kolumny 3:", asd2.group('col3'),"|Dane z kolumny 6:", asd2.group('col6'))
 
 if __name__ == "__main__":
     filename = askopenfilename()
